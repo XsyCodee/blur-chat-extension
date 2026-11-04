@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Blur Chat — WA & Telegram",
+  "version": "1.0.0",
+  "description": "Memblur seluruh isi WhatsApp Web dan Telegram Web. Blur hilang saat kursor berada di atas chat.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://web.telegram.org/*"
+  ],
+  "action": {
+    "default_title": "Blur Chat",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/*",
+        "https://web.telegram.org/*"
+      ],
+      "css": ["blur.css"],
+      "js": ["blur.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

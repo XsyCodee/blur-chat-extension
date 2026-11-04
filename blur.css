@@ -1,0 +1,89 @@
+/*
+ * Blur Chat — hanya ISI, bukan nama.
+ *
+ * Tiga aturan:
+ *   1  Sidebar: preview pesan diblur, NAMA tetap tajam
+ *   2  Panel chat: seluruh isi percakapan diblur
+ *   3  Kursor diarahkan ke elemen -> blurnya hilang
+ *
+ * Semua lewat selektor CSS, bukan gaya inline. Jadi pesan atau chat baru
+ * yang dirender belakangan otomatis ikut terblur tanpa perlu dipantau.
+ */
+
+/* ══════════════════════════════════════════════════════════════
+   1. SIDEBAR — preview diblur, nama tidak
+   ══════════════════════════════════════════════════════════════ */
+
+/* WhatsApp: tiap chat adalah div[role="row"]. Semua teks di dalamnya
+   diblur, lalu elemen yang punya atribut title (nama kontak) dibersihkan.
+   Preview pesan di WhatsApp tidak punya title, nama punya. */
+html.bc-on div[role="row"] span,
+html.bc-on div[role="row"] div.copyable-text {
+  filter: blur(5px);
+  transition: filter 120ms ease-out;
+}
+
+html.bc-on div[role="row"] span[title],
+html.bc-on div[role="row"] [title][aria-label] {
+  filter: none;
+}
+
+/* Kursor di atas satu chat -> preview chat itu dibuka */
+html.bc-on div[role="row"]:hover span,
+html.bc-on div[role="row"]:hover div.copyable-text {
+  filter: none;
+}
+
+/* Telegram: preview ada di .last-message, nama di .peer-title */
+html.bc-on .chatlist-chat .last-message,
+html.bc-on .chatlist .last-message,
+html.bc-on .ListItem .last-message {
+  filter: blur(5px);
+  transition: filter 120ms ease-out;
+}
+
+html.bc-on .chatlist-chat:hover .last-message,
+html.bc-on .chatlist .ListItem:hover .last-message,
+html.bc-on .last-message:hover {
+  filter: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   2. PANEL CHAT — seluruh isi percakapan
+   ══════════════════════════════════════════════════════════════ */
+
+html.bc-on [role="main"],
+html.bc-on #main,
+html.bc-on .chat-container,
+html.bc-on .messages-layout {
+  filter: blur(12px);
+  transition: filter 130ms ease-out;
+}
+
+/* Kursor masuk panel chat -> isi percakapan terbuka */
+html.bc-on [role="main"]:hover,
+html.bc-on #main:hover,
+html.bc-on .chat-container:hover,
+html.bc-on .messages-layout:hover {
+  filter: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   3. PENGAMAN
+   ══════════════════════════════════════════════════════════════ */
+
+/* Halaman login / QR tidak diblur. */
+html.bc-login div[role="row"] span,
+html.bc-login div[role="row"] div.copyable-text,
+html.bc-login .copyable-text,
+html.bc-login [role="main"],
+html.bc-login #main,
+html.bc-login .last-message {
+  filter: none !important;
+}
+
+/* Blur tetap terlihat walau elemen punya filter sendiri. */
+html.bc-on [role="main"] *,
+html.bc-on #main * {
+  will-change: filter;
+}

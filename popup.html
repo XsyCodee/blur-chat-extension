@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Blur Chat</title>
+<style>
+  :root{ --ink:#0d203c; --muted:#5b6b82; --accent:#0969f7; --rule:#e3e6eb; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ width:250px; font-family:'Segoe UI',system-ui,sans-serif;
+        color:var(--ink); background:#fff; padding:14px 15px 13px; }
+  .eyebrow{ font-family:ui-monospace,monospace; font-size:9px; letter-spacing:.16em;
+            text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+  h1{ font-size:14px; font-weight:600; letter-spacing:-.01em; margin-bottom:11px; }
+  .baris{ display:flex; align-items:center; justify-content:space-between;
+          padding:9px 0; border-top:1px solid var(--rule); }
+  .label{ font-size:12px; }
+  .sub{ font-size:10px; color:var(--muted); margin-top:1px; }
+  .sakelar{ position:relative; width:38px; height:21px; flex:0 0 auto; }
+  .sakelar input{ opacity:0; width:0; height:0; }
+  .jalur{ position:absolute; inset:0; background:#d3d8e0; border-radius:11px;
+          transition:background .15s; cursor:pointer; }
+  .jalur::after{ content:''; position:absolute; width:15px; height:15px; left:3px; top:3px;
+                 background:#fff; border-radius:50%; transition:transform .15s; }
+  .sakelar input:checked + .jalur{ background:var(--accent); }
+  .sakelar input:checked + .jalur::after{ transform:translateX(17px); }
+  .status{ margin-top:10px; padding-top:9px; border-top:1px solid var(--rule);
+           font-size:10.5px; color:var(--muted); line-height:1.5; }
+  .status b{ color:var(--ink); font-weight:600; }
+</style>
+</head>
+<body>
+  <p class="eyebrow">Ekstensi</p>
+  <h1>Blur Chat</h1>
+
+  <div class="baris">
+    <div>
+      <div class="label">Blur aktif</div>
+      <div class="sub">Ctrl+Shift+B</div>
+    </div>
+    <label class="sakelar">
+      <input type="checkbox" id="sakelar">
+      <span class="jalur"></span>
+    </label>
+  </div>
+
+  <p class="status" id="status">Memuat…</p>
+
+  <script src="popup.js"></script>
+</body>
+</html>
